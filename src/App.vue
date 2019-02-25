@@ -1,28 +1,39 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <div class="wrap">
+      <router-view></router-view>
+      <mt-tabbar v-model="selected">
+        <mt-tab-item id="外卖">外卖</mt-tab-item>
+        <mt-tab-item id="order">订单</mt-tab-item>
+        <mt-tab-item id="find">发现</mt-tab-item>
+        <mt-tab-item id="我的">我的</mt-tab-item>
+      </mt-tabbar>
+    </div>
   </div>
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  name: "app",
+  data: () => ({
+    selected: "home"
+  }),
+  watch: {
+    selected() {
+      const url = this.selected === "home" ? "/" : `/${this.selected}`;
+      this.$router.history.push(url);
+    }
   }
-}
+};
 </script>
-
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  margin: 0;
+}
+.mint-tabbar {
+  position: fixed;
+}
+.mint-tabbar > .mint-tab-item.is-selected {
+  background-color: #eaeaea;
+  color: red;
 }
 </style>
